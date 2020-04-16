@@ -1,0 +1,11 @@
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Release\DBconverter.exe.config
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Release\DBconverter.exe
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Release\DBconverter.pdb
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Release\System.Data.SQLite.dll
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Release\DBconverter.MainForm.resources
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Release\DBconverter.Properties.Resources.resources
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Release\DBconverter.csproj.GenerateResource.cache
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Release\DBconverter.csproj.CoreCompileInputs.cache
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Release\DBconverter.csproj.CopyComplete
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Release\DBconverter.exe
+C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Release\DBconverter.pdb

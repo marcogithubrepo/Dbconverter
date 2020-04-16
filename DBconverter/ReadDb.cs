@@ -4,7 +4,6 @@ using System.Text;
 using System.Data.SQLite;
 using System.Data;
 using System.IO;
-using System.Text;
 
 namespace DBconverter
 {
@@ -12,10 +11,13 @@ namespace DBconverter
     {
         SQLiteConnection con = null;
         Csvwriter Csvwriter = new Csvwriter();
+        public string dbmonth;
+        public string dbyear;
+        public string dbpath;
 
-        public ReadDb()
+        public ReadDb(Csvwriter csv)
         {
-           
+            Csvwriter = csv;
         }
 
         ~ReadDb()
@@ -24,25 +26,41 @@ namespace DBconverter
                 CloseConnection();
         }
 
-        public bool OpenConnection(string dbpath, string csvpath)
+        public bool OpenConnection(string dbname, string csname)
         {
-            Csvwriter.opencsv(csvpath);
+           
+            Csvwriter.Opencsv(csname); // to set on mainframe
 
-            string cs = @"URI=file:C:\Users\Marco\source\repos\DBconverter\DBconverter\" + dbpath;
+            string cs = @"URI=file:" + dbpath + dbmonth + " " + dbyear + @"\" + dbname;
 
             try
             {
                 con = new SQLiteConnection(cs);
-                con.Open();
+
+                if (!File.Exists(dbpath + dbmonth + " " + dbyear + @"\" + dbname))
+                {
+                    //LOG db file non trovato
+                    return false;
+                }
+
+
+                if (con.State != ConnectionState.Open)
+                    con.Open();
+                else
+                {
+                    //LOG db file already open
+                    return false;
+                }
 
             }
-            catch (InvalidOperationException e)
+            catch (System.Data.SQLite.SQLiteException e)
             {
                 Console.WriteLine(e);
+
+                //LOG error opening db file
                 return false;
             }
             
-
             return true;
 
         }
@@ -58,6 +76,12 @@ namespace DBconverter
                     if (con.State == ConnectionState.Open)
                         con.Close();
                 }
+                else {
+
+                    //Log SQLiteConnection in null before closing
+                    return false;
+                }
+
 
             }
             catch (InvalidOperationException e)
@@ -72,67 +96,104 @@ namespace DBconverter
 
         public bool ReadFile()
         {
-            //Read all db file
-           
-            string stm = "SELECT * FROM sql_94255_LocMATING_10W";
+
+            //Get all tables name
+            List<string> tables = new List<string>();
+            DataTable dt = con.GetSchema("Tables");
+            foreach (DataRow row in dt.Rows)
+            {
+                string tablename = (string)row[2];
+                tables.Add(tablename);
+            }
+
+
+            //select tables #2
+            string stm = "SELECT * FROM " + tables[1] ;
             var cmd = new SQLiteCommand(stm, con);
 
             SQLiteDataReader rdr = cmd.ExecuteReader();
 
+            int fieldtocount = 5;
+            if (rdr.FieldCount < fieldtocount)
+                fieldtocount = rdr.FieldCount;
+
             string leggititolo = null;
 
-            //Read all field in a row
-            for (int i = 0; i < rdr.FieldCount; i++)
+
+            //Read title try/catch
+            try
             {
-                if (i == rdr.FieldCount)
+               
+            //Read all field in a row
+            for (int i = 0; i < fieldtocount; i++)
+            {
+                if (i == fieldtocount)
                     leggititolo += rdr.GetName(i);
                 else
                     leggititolo += rdr.GetName(i) + ",";
 
             }
 
-            Csvwriter.Write(leggititolo);
+            Csvwriter.Writecsv(leggititolo);
+            }
+            catch (InvalidOperationException e)
+            {
+                //LOG
+                Console.WriteLine(e);
+                return false;  
+            }
 
             string leggi = null;
+            int countline = 0;//to remove
 
-            int countline = 0;
+            //set number of field to count
 
-            
-            while (rdr.Read() && countline<20)
+
+
+            //Read lines try/catch
+            try
             {
-                countline++;
-
-                try
+                leggi = null;
+                while (rdr.Read()/* && countline < 20000*/)
                 {
-                    leggi = null;
+                    countline++;
+
 
                     //Read all field in a row
-                    for (int i = 0; i < rdr.FieldCount; i++)
+                    for (int i = 0; i < fieldtocount; i++)
                     {
-                        if (i == rdr.FieldCount)
-                            leggi += rdr.GetString(i);
+                        if (i == fieldtocount - 1)
+                            leggi += rdr.GetString(i) + " \n";
                         else
                             leggi += rdr.GetString(i) + ",";
 
                     }
 
-                    if (!Csvwriter.Write(leggi))
-                        return false;
+                    var howManyBytes = leggi.Length * sizeof(Char);
+                    if (howManyBytes > 5000000)
+                    {
+                        if (!Csvwriter.Writecsv(leggi))
+                            return false;
+                        leggi = null;
+                    }
+
 
                 }
-                catch (InvalidOperationException e)
-                {
+                
+                if (!Csvwriter.Writecsv(leggi))
                     return false;
-
-                    Console.WriteLine(e);
-                }
-            
-
-
             }
+            catch (InvalidOperationException e)
+            {          
+                //LOG
+                Console.WriteLine(e);
+                return false;
+            }
+
             return true;
         }
 
-       
     }
+
+
 }

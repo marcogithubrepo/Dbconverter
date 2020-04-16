@@ -11,10 +11,9 @@ namespace DBconverter
         public XmlReader reader = null;
 
         public List<List<String>> databaseinfo = new List<List<String>>(); //Creates new nested List
-
+        public string dbpath = null;
+        public string csvpath = null;
         private int databasecounter = 0;
-
-
 
         public Xml()
         {
@@ -30,7 +29,7 @@ namespace DBconverter
             try
             {
                 //check connection status
-                reader = XmlReader.Create(@"C:\Users\Marco\source\repos\DBconverter\DBconverter\xml.xml");
+                reader = XmlReader.Create(@"xml.xml");
             }
             catch (InvalidOperationException e)
             {
@@ -45,6 +44,12 @@ namespace DBconverter
                     //return only when you have START tag  
                     switch (reader.Name.ToString())
                     {
+                        case "Dbpath":
+                            dbpath = reader.ReadString();
+                            break;
+                        case "Csvpath":
+                            csvpath = reader.ReadString();
+                            break;
                         case "Dbname":
                             databaseinfo.Add(new List<String>());
                             databaseinfo[databasecounter].Add(reader.ReadString());

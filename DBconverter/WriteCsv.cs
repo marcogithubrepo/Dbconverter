@@ -3,47 +3,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using System.Text;
+
 
 namespace DBconverter
 {
     public class Csvwriter
     {
-        StringBuilder csv;
-        string path;
+        
+        public string csvmonth;
+        public string csvyear;
+        public string csvpath;
 
-        public bool opencsv(string csvname)
+        private StringBuilder csv;
+        private string path;
+
+        public bool Opencsv(string csvname)
         {
 
-                path = @"C:\Users\Marco\source\repos\DBconverter\DBconverter\" + csvname;
+            path =  csvpath + csvyear + @"\" + csvname;
+
+            try
+            {
                 csv = new StringBuilder();
+            }          
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
                
-
-
-            return true;
+             return true;
 
         }
 
-
-        public bool Write(string leggi)
+        public bool Writecsv(string leggi)
         {
-            // This text is added only once to the file.
-            if (File.Exists(path))
+
+            try
             {
                 csv.AppendLine(leggi);
-
-                //after your loop
                 File.WriteAllText(path, csv.ToString());
             }
-            else
+            catch (InvalidOperationException e)
             {
+                Console.WriteLine(e);
+                return false;
+            }
+            catch (System.IO.IOException e)
+            {
+                Console.WriteLine(e);
                 return false;
             }
 
             return true;
-
-        }                                                               
-
+        }  
+        
     }
 
 

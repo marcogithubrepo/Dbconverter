@@ -13,7 +13,6 @@ C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Debug\DBconverter.exe.co
 C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Debug\DBconverter.exe
 C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Debug\DBconverter.pdb
 C:\Users\Marco\Documents\C#\DBconverter\DBconverter\bin\Debug\System.Data.SQLite.dll
-C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Debug\DBconverter.csprojAssemblyReference.cache
 C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Debug\DBconverter.MainForm.resources
 C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Debug\DBconverter.Properties.Resources.resources
 C:\Users\Marco\Documents\C#\DBconverter\DBconverter\obj\Debug\DBconverter.csproj.GenerateResource.cache

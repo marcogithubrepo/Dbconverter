@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<Databases> 
+ <Dbpath>D:\test\</Dbpath>   
+ <Csvpath>D:\test\</Csvpath>   
+  <Database>  
+    <Dbname>7_2_GuarnizioneDX.db</Dbname>  
+    <Csv>ASSY\7+2_A2029\Dati\1.csv</Csv>  
+  </Database>
+  <Database>  
+    <Dbname>7_2_GuarnizioneEXT.db</Dbname>  
+    <Csv>ASSY\7+2_A2029\Dati\2.csv</Csv>  
+  </Database>  
+</Databases> 
