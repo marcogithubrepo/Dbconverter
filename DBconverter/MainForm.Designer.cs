@@ -39,6 +39,7 @@
             this.textBoxcsvpath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // button1
@@ -137,6 +138,13 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "csv path:";
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +180,7 @@
         private System.Windows.Forms.TextBox textBoxcsvpath;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

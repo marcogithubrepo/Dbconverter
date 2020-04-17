@@ -9,11 +9,31 @@ namespace DBconverter
 {
     public class ReadDb
     {
-        SQLiteConnection con = null;
-        Csvwriter Csvwriter = new Csvwriter();
-        public string dbmonth;
-        public string dbyear;
-        public string dbpath;
+        private SQLiteConnection con = null;
+        private Csvwriter Csvwriter = new Csvwriter();
+
+        private string _dbmonth;
+        private string _dbyear;
+        private string _dbpath;
+
+        public string dbmonth
+        {
+            get { return _dbmonth; }
+            set { _dbmonth = value; }
+        }
+
+        public string dbyear
+        {
+            get { return _dbyear; }
+            set { _dbyear = value; }
+        }
+
+        public string dbpath
+        {
+            get { return _dbpath; }
+            set { _dbpath = value; }
+        }
+
 
         public ReadDb(Csvwriter csv)
         {
@@ -22,7 +42,6 @@ namespace DBconverter
 
         ~ReadDb()
         {
-           // if (con.State == ConnectionState.Open)
                 CloseConnection();
         }
 
@@ -154,7 +173,7 @@ namespace DBconverter
             try
             {
                 leggi = null;
-                while (rdr.Read()/* && countline < 20000*/)
+                while (rdr.Read() && countline < 5000)
                 {
                     countline++;
 

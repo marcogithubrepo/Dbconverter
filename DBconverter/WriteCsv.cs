@@ -10,12 +10,40 @@ namespace DBconverter
     public class Csvwriter
     {
         
-        public string csvmonth;
-        public string csvyear;
-        public string csvpath;
+        private string _csvmonth;
+        private string _csvyear;
+        private string _csvpath;
 
-        private StringBuilder csv;
+        public string csvmonth
+        {
+            get { return _csvmonth; }
+            set { _csvmonth = value; }
+        }
+
+        public string csvyear
+        {
+            get { return _csvyear; }
+            set { _csvyear = value; }
+        }
+
+        public string csvpath
+        {
+            get { return _csvpath; }
+            set { _csvpath = value; }
+        }
+
         private string path;
+        private StringBuilder csv;
+
+        public Csvwriter()
+        {
+
+        }
+
+         ~Csvwriter()
+        {
+            //csv.Clear();
+        }
 
         public bool Opencsv(string csvname)
         {
@@ -59,7 +87,5 @@ namespace DBconverter
         }  
         
     }
-
-
 
 }

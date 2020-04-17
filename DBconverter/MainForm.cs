@@ -17,14 +17,13 @@ namespace DBconverter
 {
     public partial class MainForm : Form
     {
-        ReadDb save;
-        Xml xmldatabase;
-        Csvwriter Csvwriter;
-
-        ImageList imageList;
+        private ReadDb save;
+        private Xml xmldatabase;
+        private Csvwriter Csvwriter;
+        private ImageList imageList;
         private int dbreadresult;
 
-        //public delegate void SafeCallDelegate();
+        public delegate void SafeCallDelegate();
 
         public MainForm()
         {
@@ -144,6 +143,12 @@ namespace DBconverter
             }
 
 
+            if (!backgroundWorker1.IsBusy)
+                backgroundWorker1.RunWorkerAsync();
+
+             
+
+            
 
             //test thread
             //Thread thread = new Thread(threadreaddbfile);
@@ -153,20 +158,17 @@ namespace DBconverter
 
 
 
-     
-
-            for (int i = 0; i < xmldatabase.databaseinfo.Count(); i++)
-            {
-
-                int risultato = itemoperation(i);
-                setItemlistimage(risultato, i);
-                listViewresult.Refresh();
-                Thread.Sleep(500);
-               
-            }
 
 
-            MessageBox.Show("Completed!");
+            //for (int i = 0; i < xmldatabase.databaseinfo.Count(); i++)
+            //{
+
+            //    int risultato = itemoperation(i);
+            //    setItemlistimage(risultato, i);
+            //    listViewresult.Refresh();
+            //    Thread.Sleep(500);
+
+            //}
 
         }
 
@@ -184,11 +186,27 @@ namespace DBconverter
         public int itemoperation(int listindex)
         {
             dbreadresult = 0;
-            ListViewItem item = this.listViewresult.Items[listindex];
+            ListViewItem item = null;
+
+            if (listViewresult.InvokeRequired)
+            {
+                listViewresult.Invoke((MethodInvoker)delegate ()
+                {
+
+                    item = this.listViewresult.Items[listindex];
+
+                });
+            }
+            else
+            {
+                item = this.listViewresult.Items[listindex];
+            }
 
             Stopwatch sw = new Stopwatch();
 
             sw.Start();
+            int logresult = 0;
+
 
             if (save.OpenConnection(xmldatabase.databaseinfo[listindex].ElementAt<string>(0), xmldatabase.databaseinfo[listindex].ElementAt<string>(1)))          
             {
@@ -198,12 +216,13 @@ namespace DBconverter
                     {
                         dbreadresult = 1;
                         sw.Stop();
-                        item.SubItems[1].Text = "Elapsed=" + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + ":" + sw.Elapsed.Milliseconds;
+                        logresult = 0;
+
                     }
                     else
                     {
                         sw.Stop();
-                        item.SubItems[1].Text = "ERROR closing db file";
+                        logresult = 1;
                         dbreadresult = 0;
                     }
 
@@ -211,7 +230,7 @@ namespace DBconverter
                 else
                 {
                     sw.Stop();
-                    item.SubItems[1].Text = "ERROR reading db file";
+                    logresult = 2;
                     dbreadresult = 0;
                 }
 
@@ -220,48 +239,131 @@ namespace DBconverter
             else
             {
                 sw.Stop();
-                item.SubItems[1].Text = "ERROR opening db file";
+                logresult = 3;
                 dbreadresult = 0;
             }
+
+
+            if (listViewresult.InvokeRequired)
+            {
+                listViewresult.Invoke((MethodInvoker)delegate ()
+                {
+
+                    switch (logresult)
+                    {
+                        case 0:
+                            item.SubItems[1].Text = "Elapsed=" + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + ":" + sw.Elapsed.Milliseconds;
+                            break;
+                        case 1:
+                            item.SubItems[1].Text = "ERROR closing db file";
+                            break;
+                        case 2:
+                            item.SubItems[1].Text = "ERROR reading db file";
+                            break;
+                        case 3:
+                            item.SubItems[1].Text = "ERROR opening db file"; ;
+                            break;
+                        default:
+                            item.SubItems[1].Text = "Not defined error"; ;
+                            break;
+                    }
+                });
+            }
+            else
+            {
+
+                //create a funtion
+                switch (logresult)
+                {
+                    case 0:
+                        item.SubItems[1].Text = "Elapsed=" + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + ":" + sw.Elapsed.Milliseconds;
+                        break;
+                    case 1:
+                        item.SubItems[1].Text = "ERROR closing db file";
+                        break;
+                    case 2:
+                        item.SubItems[1].Text = "ERROR reading db file";
+                        break;
+                    case 3:
+                        item.SubItems[1].Text = "ERROR opening db file"; ;
+                        break;
+                    default:
+                        item.SubItems[1].Text = "Not defined error"; ;
+                        break;
+                }
+            }
+
+
+
 
             return dbreadresult;
         }
 
         public bool setItemlistimage(int result, int listitem)
         {
-            ListViewItem item = this.listViewresult.Items[listitem];
-            if (result == 1)
-                item.ImageIndex = 1; //ok image
-            else if (result == 2)
-                item.ImageIndex = 2;//question mark image
-            else 
-                item.ImageIndex = 0;//bad image
+
+            ListViewItem item = null; 
+            if (listViewresult.InvokeRequired)
+            {
+                listViewresult.Invoke((MethodInvoker)delegate ()
+                {
+
+                   item = this.listViewresult.Items[listitem];
+                    if (result == 1)
+                        item.ImageIndex = 1; //ok image
+                    else if (result == 2)
+                        item.ImageIndex = 2;//question mark image
+                    else
+                        item.ImageIndex = 0;//bad image
+
+                });
+            }
+            else
+            {
+
+                item = this.listViewresult.Items[listitem];
+                if (result == 1)
+                    item.ImageIndex = 1; //ok image
+                else if (result == 2)
+                    item.ImageIndex = 2;//question mark image
+                else
+                    item.ImageIndex = 0;//bad image
+            }
+
+            
+
             return true;
         }
 
-        //public void threadreaddbfile()
-        //{
-        //    if (InvokeRequired)
-        //    {
-        //        var d = new SafeCallDelegate(threadreaddbfile);
-        //        this.Invoke(d, new object[] {  });
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < xmldatabase.databaseinfo.Count(); i++)
-        //        {
+        public void threadreaddbfile()
+        {
 
-        //            int risultato = itemoperation(i);
-        //            setItemlistimage(risultato, i);
-        //            Thread.Sleep(500);
-        //        }
-        //    }
+            for (int i = 0; i < xmldatabase.databaseinfo.Count(); i++)
+            {
+
+                int risultato = itemoperation(i);
+                setItemlistimage(risultato, i);
+                Thread.Sleep(500);
+            }
+
+            int a = 0;
+
+        }
+
+        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            threadreaddbfile();
+
+            //Thread.Sleep(4000);
 
 
+        }
 
-        //}
+        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
 
-
-
+            MessageBox.Show("Completed!");
+        }
     }
 }
