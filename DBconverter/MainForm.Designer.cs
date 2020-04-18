@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnstart = new System.Windows.Forms.Button();
             this.listViewresult = new System.Windows.Forms.ListView();
             this.comboBoxmonth = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,18 +40,25 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.numericUpDownFields = new System.Windows.Forms.NumericUpDown();
+            this.groupBoxFields = new System.Windows.Forms.GroupBox();
+            this.groupBoxDate = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFields)).BeginInit();
+            this.groupBoxFields.SuspendLayout();
+            this.groupBoxDate.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // btnstart
             // 
-            this.button1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(497, 271);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 40);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Start";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.btnstart.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnstart.Location = new System.Drawing.Point(497, 271);
+            this.btnstart.Name = "btnstart";
+            this.btnstart.Size = new System.Drawing.Size(90, 40);
+            this.btnstart.TabIndex = 0;
+            this.btnstart.Text = "Start";
+            this.btnstart.UseVisualStyleBackColor = true;
+            this.btnstart.Click += new System.EventHandler(this.Button1_Click);
             // 
             // listViewresult
             // 
@@ -66,7 +73,7 @@
             // 
             this.comboBoxmonth.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxmonth.FormattingEnabled = true;
-            this.comboBoxmonth.Location = new System.Drawing.Point(497, 186);
+            this.comboBoxmonth.Location = new System.Drawing.Point(17, 33);
             this.comboBoxmonth.Name = "comboBoxmonth";
             this.comboBoxmonth.Size = new System.Drawing.Size(88, 21);
             this.comboBoxmonth.TabIndex = 2;
@@ -95,7 +102,7 @@
             // 
             this.comboBoxYear.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxYear.FormattingEnabled = true;
-            this.comboBoxYear.Location = new System.Drawing.Point(497, 233);
+            this.comboBoxYear.Location = new System.Drawing.Point(18, 66);
             this.comboBoxYear.Name = "comboBoxYear";
             this.comboBoxYear.Size = new System.Drawing.Size(88, 21);
             this.comboBoxYear.TabIndex = 4;
@@ -145,24 +152,85 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(4, 24);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(114, 17);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Max fields enabled";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
+            // 
+            // numericUpDownFields
+            // 
+            this.numericUpDownFields.Location = new System.Drawing.Point(33, 52);
+            this.numericUpDownFields.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownFields.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownFields.Name = "numericUpDownFields";
+            this.numericUpDownFields.Size = new System.Drawing.Size(34, 20);
+            this.numericUpDownFields.TabIndex = 12;
+            this.numericUpDownFields.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // groupBoxFields
+            // 
+            this.groupBoxFields.Controls.Add(this.numericUpDownFields);
+            this.groupBoxFields.Controls.Add(this.checkBox1);
+            this.groupBoxFields.Location = new System.Drawing.Point(478, 63);
+            this.groupBoxFields.Name = "groupBoxFields";
+            this.groupBoxFields.Size = new System.Drawing.Size(115, 81);
+            this.groupBoxFields.TabIndex = 13;
+            this.groupBoxFields.TabStop = false;
+            this.groupBoxFields.Text = "Fields";
+            // 
+            // groupBoxDate
+            // 
+            this.groupBoxDate.Controls.Add(this.comboBoxYear);
+            this.groupBoxDate.Controls.Add(this.comboBoxmonth);
+            this.groupBoxDate.Location = new System.Drawing.Point(478, 150);
+            this.groupBoxDate.Name = "groupBoxDate";
+            this.groupBoxDate.Size = new System.Drawing.Size(114, 115);
+            this.groupBoxDate.TabIndex = 14;
+            this.groupBoxDate.TabStop = false;
+            this.groupBoxDate.Text = "Date";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 389);
+            this.Controls.Add(this.groupBoxDate);
+            this.Controls.Add(this.groupBoxFields);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxcsvpath);
             this.Controls.Add(this.textBoxdbpath);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBoxYear);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBoxmonth);
             this.Controls.Add(this.listViewresult);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnstart);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Database converter";
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFields)).EndInit();
+            this.groupBoxFields.ResumeLayout(false);
+            this.groupBoxFields.PerformLayout();
+            this.groupBoxDate.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,7 +238,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnstart;
         private System.Windows.Forms.ListView listViewresult;
         private System.Windows.Forms.ComboBox comboBoxmonth;
         private System.Windows.Forms.Label label1;
@@ -181,6 +249,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.NumericUpDown numericUpDownFields;
+        private System.Windows.Forms.GroupBox groupBoxFields;
+        private System.Windows.Forms.GroupBox groupBoxDate;
     }
 }
 

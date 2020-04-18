@@ -15,6 +15,8 @@ namespace DBconverter
         private string _dbmonth;
         private string _dbyear;
         private string _dbpath;
+        private int _fieldtoread;
+
 
         public string dbmonth
         {
@@ -32,6 +34,12 @@ namespace DBconverter
         {
             get { return _dbpath; }
             set { _dbpath = value; }
+        }
+
+        public int fieldtoread
+        {
+            get { return _fieldtoread; }
+            set { _fieldtoread = value; }
         }
 
 
@@ -132,7 +140,7 @@ namespace DBconverter
 
             SQLiteDataReader rdr = cmd.ExecuteReader();
 
-            int fieldtocount = 5;
+            int fieldtocount = this.fieldtoread;
             if (rdr.FieldCount < fieldtocount)
                 fieldtocount = rdr.FieldCount;
 

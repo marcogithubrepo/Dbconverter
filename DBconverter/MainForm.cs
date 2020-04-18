@@ -128,7 +128,32 @@ namespace DBconverter
         public void Button1_Click(object sender, EventArgs e)
         {
 
+            if (checkBox1.Checked)
+                save.fieldtoread = (int)numericUpDownFields.Value;
+            else
+                save.fieldtoread = 10000;
+
+            checkBox1.Enabled = false;
+            numericUpDownFields.Enabled = false;
+            btnstart.Text = "running";
+
+            btnstart.Enabled = false;
+            comboBoxYear.Enabled = false;
+            comboBoxmonth.Enabled = false;
+
+
+
             //get year and month
+            if (comboBoxmonth.SelectedItem == null || comboBoxYear.SelectedItem == null  )
+            {
+
+                this.Enable_all();
+                MessageBox.Show("Select month and year");
+                return;
+
+            }
+
+
             save.dbmonth = comboBoxmonth.SelectedItem.ToString();
             save.dbyear = comboBoxYear.SelectedItem.ToString();
             
@@ -138,6 +163,7 @@ namespace DBconverter
 
             if(!this.refreshlist())
             {
+                this.Enable_all();
                 //LOG error refresh
                 return;
             }
@@ -148,27 +174,7 @@ namespace DBconverter
 
              
 
-            
-
-            //test thread
-            //Thread thread = new Thread(threadreaddbfile);
-            //thread.Start();
-            // thread.Join();
-            // ...
-
-
-
-
-
-            //for (int i = 0; i < xmldatabase.databaseinfo.Count(); i++)
-            //{
-
-            //    int risultato = itemoperation(i);
-            //    setItemlistimage(risultato, i);
-            //    listViewresult.Refresh();
-            //    Thread.Sleep(500);
-
-            //}
+          
 
         }
 
@@ -362,8 +368,30 @@ namespace DBconverter
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            this.Enable_all();
 
             MessageBox.Show("Completed!");
+        }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (checkBox1.Checked)
+                numericUpDownFields.Enabled = true;
+            else
+                numericUpDownFields.Enabled = false;
+
+        }
+
+        private void Enable_all()
+        {
+            btnstart.Text = "Start";
+            btnstart.Enabled = true;
+            comboBoxYear.Enabled = true;
+            comboBoxmonth.Enabled = true;
+            checkBox1.Enabled = true;
+            numericUpDownFields.Enabled = true;
+
         }
     }
 }
