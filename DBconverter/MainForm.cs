@@ -61,6 +61,7 @@ namespace DBconverter
             imageList.Images.Add(Properties.Resources.nook);
             imageList.Images.Add(Properties.Resources.ok);         
             imageList.Images.Add(Properties.Resources.question);
+            imageList.Images.Add(Properties.Resources.hourglass);
 
 
             // tell your ListView to use the new image list
@@ -141,6 +142,7 @@ namespace DBconverter
             comboBoxYear.Enabled = false;
             comboBoxmonth.Enabled = false;
 
+            this.Refresh();
 
 
             //get year and month
@@ -319,6 +321,8 @@ namespace DBconverter
                         item.ImageIndex = 1; //ok image
                     else if (result == 2)
                         item.ImageIndex = 2;//question mark image
+                    else if (result == 3)
+                        item.ImageIndex = 3;//question mark image
                     else
                         item.ImageIndex = 0;//bad image
 
@@ -346,7 +350,7 @@ namespace DBconverter
 
             for (int i = 0; i < xmldatabase.databaseinfo.Count(); i++)
             {
-
+                setItemlistimage(3, i); //set question mark
                 int risultato = itemoperation(i);
                 setItemlistimage(risultato, i);
                 Thread.Sleep(500);

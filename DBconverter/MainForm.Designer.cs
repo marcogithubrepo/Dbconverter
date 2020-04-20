@@ -193,7 +193,7 @@
             this.groupBoxFields.Controls.Add(this.checkBox1);
             this.groupBoxFields.Location = new System.Drawing.Point(478, 63);
             this.groupBoxFields.Name = "groupBoxFields";
-            this.groupBoxFields.Size = new System.Drawing.Size(115, 81);
+            this.groupBoxFields.Size = new System.Drawing.Size(123, 81);
             this.groupBoxFields.TabIndex = 13;
             this.groupBoxFields.TabStop = false;
             this.groupBoxFields.Text = "Fields";
@@ -204,7 +204,7 @@
             this.groupBoxDate.Controls.Add(this.comboBoxmonth);
             this.groupBoxDate.Location = new System.Drawing.Point(478, 150);
             this.groupBoxDate.Name = "groupBoxDate";
-            this.groupBoxDate.Size = new System.Drawing.Size(114, 115);
+            this.groupBoxDate.Size = new System.Drawing.Size(123, 115);
             this.groupBoxDate.TabIndex = 14;
             this.groupBoxDate.TabStop = false;
             this.groupBoxDate.Text = "Date";
@@ -225,7 +225,10 @@
             this.Controls.Add(this.listViewresult);
             this.Controls.Add(this.btnstart);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(643, 428);
+            this.MinimumSize = new System.Drawing.Size(643, 428);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Database converter";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFields)).EndInit();
             this.groupBoxFields.ResumeLayout(false);

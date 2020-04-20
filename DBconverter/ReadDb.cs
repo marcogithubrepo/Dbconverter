@@ -181,7 +181,7 @@ namespace DBconverter
             try
             {
                 leggi = null;
-                while (rdr.Read() && countline < 5000)
+                while (rdr.Read() /*&& countline < 5000*/)
                 {
                     countline++;
 
